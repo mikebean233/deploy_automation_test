@@ -39,3 +39,15 @@ jobs:
               ref: 'refs/tags/${{ github.event.inputs.rcName }}',
               sha: context.sha
             })
+      - name: Get Latest Release
+        id: latest_version
+        uses: abatilo/release-info-action@v1.3.3
+        with:
+          owner: mikebean4551
+          repo: deploy_automation_test
+      - name: Example of consumption of the output
+        env:
+          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
+          LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
+        run: |
+          echo "Version $LATEST was released at $LATEST_DATE"     
