@@ -6,7 +6,7 @@ name: Create RC
 # or API.
 on:
   workflow_dispatch:
-    # Inputs the workflow accepts.
+  # Inputs the workflow accepts.
     inputs:
       rcName:
         description: 'Description of the rc'
@@ -19,6 +19,8 @@ jobs:
   greet:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+
+    permissions: write-all
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
