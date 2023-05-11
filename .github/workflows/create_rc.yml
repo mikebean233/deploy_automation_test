@@ -49,5 +49,6 @@ jobs:
         env:
           LATEST: ${{ steps.latest_version.outputs.latest_tag }}
           LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
+          LATEST_COMMITISH: $ {{ steps.latest_version.outputs.target_commitish }}
         run: |
-          echo "Version $LATEST was released at $LATEST_DATE"     
+          echo "Version $LATEST was released at $LATEST_DATE, commitish: $LATEST_COMMITISH"     
