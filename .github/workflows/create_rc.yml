@@ -43,7 +43,7 @@ jobs:
         id: latest_version
         uses: abatilo/release-info-action@v1.3.3
         with:
-          owner: mikebean4551
+          owner: mikebean233
           repo: deploy_automation_test
       - name: Example of consumption of the output
         env:
