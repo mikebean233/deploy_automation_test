@@ -29,6 +29,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Run build script
+        run: ./.github/workflows/hello.sh
+        shell: bash
       - name: Tag
         uses: actions/github-script@v5
         with:
