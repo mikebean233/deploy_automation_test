@@ -23,6 +23,7 @@ jobs:
       - name: Print env argument
         run: echo User selected environment ${{ inputs.environment }}           
   deploy-dev:
+    permissions: write-all
     if: ${{ inputs.environment == 'dev' }}
     runs-on: ubuntu-latest
     environment: dev
