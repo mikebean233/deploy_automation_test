@@ -29,6 +29,14 @@ jobs:
     steps:
       - name: deploy
         run: echo "Deploying to dev"
+      
+      - uses: actions/checkout@v1
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment-dev
+        with:
+          token: '${{ github.token }}'
+          environment: production        
   deploy-qa:
     if: ${{ inputs.environment == 'qa' }}
     runs-on: ubuntu-latest
