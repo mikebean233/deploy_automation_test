@@ -10,15 +10,15 @@ on:
   workflow_dispatch:
     inputs:
       deploy-env:
-        type: deploy-env
+        type: environment
         description: Environment
         options:
-        - dev
-        - qa
-        - prod
+          - dev
+          - qa
+          - prod
 jobs:
   print-environment:
     runs-on: ubuntu-latest
     steps:
-      - name: Print the input tag to STDOUT
-        run: echo $deploy-env           
+      - name: Print env argument
+        run: echo ${{ github.event.inputs.environment }}           
