@@ -36,7 +36,15 @@ jobs:
         id: deployment-dev
         with:
           token: '${{ github.token }}'
-          environment: production        
+          environment: production
+      - name: Update deployment status (success)
+        if: success()
+        uses: chrnorm/deployment-status@v2
+        with:
+          token: '${{ github.token }}'
+          environment-url: http://michaeldpeterson.net
+          state: 'success'
+          deployment-id: ${{ steps.deployment.outputs.deployment_id }}          
   deploy-qa:
     if: ${{ inputs.environment == 'qa' }}
     runs-on: ubuntu-latest
