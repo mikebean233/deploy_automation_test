@@ -9,8 +9,8 @@ on:
       - main
   workflow_dispatch:
     inputs:
-      deploy-env:
-        type: environment
+      environment:
+        type: choice
         description: Environment
         options:
           - dev
@@ -21,4 +21,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print env argument
-        run: echo ${{ github.event.inputs.environment }}           
+        run: echo ${{ inputs.environment }}           
