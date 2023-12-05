@@ -1,0 +1,24 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      deploy-env:
+        type: deploy-env
+        description: Environment
+        options:
+        - dev
+        - qa
+        - prod
+jobs:
+  print-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the input tag to STDOUT
+        run: echo $deploy-env           
