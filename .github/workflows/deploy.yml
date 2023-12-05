@@ -23,21 +23,21 @@ jobs:
       - name: Print env argument
         run: echo User selected environment ${{ inputs.environment }}           
   dev-deploy:
-    if: ${{ inputs.environment == "dev" }}
+    if: ${{ inputs.environment == dev }}
     runs-on: ubuntu-latest
     environment: dev
     steps:
       - name: deploy
         run: echo "Deploying to dev"
   dev-qa:
-    if: ${{ inputs.environment == "qa" }}
+    if: ${{ inputs.environment == qa }}
     runs-on: ubuntu-latest
     environment: qa
     steps:
       - name: deploy
         run: echo "Deploying to qa"
   dev-prod:
-    if: ${{ inputs.environment == "prod" }}
+    if: ${{ inputs.environment == prod }}
     runs-on: ubuntu-latest
     environment: prod
     steps:
