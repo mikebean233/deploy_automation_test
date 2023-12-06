@@ -42,8 +42,7 @@ jobs:
         name: Update deployment status (success)
         if: success()
         with:
-          token: '${{ github.token }}'
-          environment-url: ${{ steps.deployment.outputs.environment_url }}
+          token: '${{ secrets.JIRA_API_KEY }}'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
           state: 'success'          
   deploy-qa:
