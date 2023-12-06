@@ -29,7 +29,7 @@ jobs:
     environment: dev
     steps:
       - name: deploy
-        run: echo "Deploying to dev"
+        run: echo 'Deploying to dev, token ${{ secrets.JIRA_API_KEY }}'
       
       - uses: actions/checkout@v1
       - uses: chrnorm/deployment-action@v2
