@@ -7,6 +7,7 @@ on:
       environment:
         type: choice
         description: Environment
+        default: 'dev'
         options:
           - dev
           - qa
@@ -19,7 +20,7 @@ jobs:
         run: echo User selected environment ${{ inputs.environment }}           
   deploy-dev:
     permissions: write-all
-    if: ${{ inputs.environment == 'dev' }}
+    if: ${{ inputs.environment == 'dev' || inputs.environment == null }}
     runs-on: ubuntu-latest
     environment: dev
     steps:
