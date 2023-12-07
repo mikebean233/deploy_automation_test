@@ -34,6 +34,9 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment: dev
+      - name: print deployment id
+        run: |
+          echo deployment id: ${{ steps.deployment-dev.outputs.deployment_id }}
       - uses: chrnorm/deployment-status@v2
         name: Update deployment status (success)
         if: success()
