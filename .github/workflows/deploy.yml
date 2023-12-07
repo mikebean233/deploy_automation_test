@@ -33,7 +33,6 @@ jobs:
         id: deployment-dev
         with:
           token: '${{ github.token }}'
-          environment: dev
       - name: print deployment id
         run: |
           echo deployment id: ${{ steps.deployment-dev.outputs.deployment_id }}
@@ -43,18 +42,52 @@ jobs:
         with:
           token: '${{ github.token }}'
           deployment-id: ${{ steps.deployment-dev.outputs.deployment_id }}
-          state: 'failure'          
+          state: 'sucess'          
   deploy-qa:
     if: ${{ inputs.environment == 'qa' }}
     runs-on: ubuntu-latest
     environment: qa
     steps:
       - name: deploy
-        run: echo "Deploying to qa"
+        run: echo 'Deploying to qa, token ${{ secrets.JIRA_API_KEY }}'
+      
+      - uses: actions/checkout@v1
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment-qa
+        with:
+          token: '${{ github.token }}'
+      - name: print deployment id
+        run: |
+          echo deployment id: ${{ steps.deployment-qa.outputs.deployment_id }}
+      - uses: chrnorm/deployment-status@v2
+        name: Update deployment status (success)
+        if: success()
+        with:
+          token: '${{ github.token }}'
+          deployment-id: ${{ steps.deployment-qa.outputs.deployment_id }}
+          state: 'success'
   deploy-prod:
     if: ${{ inputs.environment == 'prod' }}
     runs-on: ubuntu-latest
     environment: prod
     steps:
       - name: deploy
-        run: echo "Deploying to prod"        
+        run: echo 'Deploying to prod, token ${{ secrets.JIRA_API_KEY }}'
+      
+      - uses: actions/checkout@v1
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment-prod
+        with:
+          token: '${{ github.token }}'
+      - name: print deployment id
+        run: |
+          echo deployment id: ${{ steps.deployment-prod.outputs.deployment_id }}
+      - uses: chrnorm/deployment-status@v2
+        name: Update deployment status (success)
+        if: success()
+        with:
+          token: '${{ github.token }}'
+          deployment-id: ${{ steps.deployment-prod.outputs.deployment_id }}
+          state: 'success'        
