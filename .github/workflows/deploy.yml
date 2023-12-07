@@ -34,25 +34,13 @@ jobs:
         with:
           token: '${{ github.token }}'
           environment: dev
-      - name: Deploy command
-        run: |
-          echo "Deploying to production"
-          gh api --method POST repos/:owner/:repo/deployments/${{ steps.deployment-dev.outputs.deployment_id }}/statuses \
-            --field ref=main \
-            --field state=success \
-            --field environment=dev \
-            --field description="Deployment to dev" \
-            --field required_contexts[]=continuous-integration/main \
-            --field transient_environment=true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #- uses: chrnorm/deployment-status@v2
-      #  name: Update deployment status (success)
-      #  if: success()
-      #  with:
-      #    token: '${{ github.token }}'
-      #    deployment-id: ${{ steps.deployment.outputs.deployment_id }}
-      #    state: 'success'          
+      - uses: chrnorm/deployment-status@v2
+        name: Update deployment status (success)
+        if: success()
+        with:
+          token: '${{ github.token }}'
+          deployment-id: ${{ steps.deployment-dev.outputs.deployment_id }}
+          state: 'success'          
   deploy-qa:
     if: ${{ inputs.environment == 'qa' }}
     runs-on: ubuntu-latest
