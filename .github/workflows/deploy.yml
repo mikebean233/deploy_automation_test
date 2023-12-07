@@ -42,7 +42,7 @@ jobs:
         name: Update deployment status (success)
         if: success()
         with:
-          token: '${{ secrets.JIRA_API_KEY }}'
+          token: '${{ github.token }}'
           deployment-id: ${{ steps.deployment.outputs.deployment_id }}
           state: 'success'          
   deploy-qa:
