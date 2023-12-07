@@ -37,10 +37,11 @@ jobs:
       - name: Deploy command
         run: |
           echo "Deploying to production"
-          gh api --method POST repos/:owner/:repo/deployments \
+          gh api --method POST repos/:owner/:repo/deployments/${{ steps.deployment.outputs.deployment_id }}/statuses \
             --field ref=main \
-            --field environment=production \
-            --field description="Deployment to production" \
+            --field state=success \
+            --field environment=dev \
+            --field description="Deployment to dev" \
             --field required_contexts[]=continuous-integration/main \
             --field transient_environment=true
         env:
