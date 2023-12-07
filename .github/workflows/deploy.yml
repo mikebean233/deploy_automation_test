@@ -41,7 +41,12 @@ jobs:
       - name: Deploy command
         run: |
           echo "Deploying to production"
-          gh deployment create --ref main --environment production --description "Deployment to production" --state success
+          gh api --method POST repos/:owner/:repo/deployments \
+            --field ref=main \
+            --field environment=production \
+            --field description="Deployment to production" \
+            --field required_contexts[]=continuous-integration/main \
+            --field transient_environment=true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       #- uses: chrnorm/deployment-status@v2
