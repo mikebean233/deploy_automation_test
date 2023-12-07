@@ -33,11 +33,11 @@ jobs:
         id: deployment-dev
         with:
           token: '${{ github.token }}'
-          environment: production
+          environment: dev
       - name: Deploy command
         run: |
           echo "Deploying to production"
-          gh api --method POST repos/:owner/:repo/deployments/${{ steps.deployment.outputs.deployment_id }}/statuses \
+          gh api --method POST repos/:owner/:repo/deployments/${{ steps.deployment-dev.outputs.deployment_id }}/statuses \
             --field ref=main \
             --field state=success \
             --field environment=dev \
