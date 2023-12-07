@@ -40,7 +40,7 @@ jobs:
         with:
           token: '${{ github.token }}'
           deployment-id: ${{ steps.deployment-dev.outputs.deployment_id }}
-          state: 'success'          
+          state: 'failure'          
   deploy-qa:
     if: ${{ inputs.environment == 'qa' }}
     runs-on: ubuntu-latest
