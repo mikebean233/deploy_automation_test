@@ -12,6 +12,9 @@ on:
           - dev
           - qa
           - prod
+      tag:
+        type: string
+        description: tag to deploy
 jobs:
   print-environment:
     runs-on: ubuntu-latest
@@ -67,6 +70,15 @@ jobs:
           token: '${{ github.token }}'
           deployment-id: ${{ steps.deployment-qa.outputs.deployment_id }}
           state: 'success'
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release create ${{ env.tag }} \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${{ env.tag }}" \
+              --generate-notes          
   deploy-prod:
     if: ${{ inputs.environment == 'prod' }}
     runs-on: ubuntu-latest
