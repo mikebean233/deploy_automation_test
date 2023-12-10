@@ -12,7 +12,7 @@ on:
           - dev
           - qa
           - prod
-      chosen-tag:
+      tag:
         type: string
         description: tag to deploy
 jobs:
@@ -75,9 +75,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
-          gh release create ${{ env.chosen-tag }} \
+          gh release create ${{ inputs.tag }} \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ env.chosen-tag }}" \
+              --title="${GITHUB_REPOSITORY#*/} ${{ inputs.tag }}" \
               --generate-notes          
   deploy-prod:
     if: ${{ inputs.environment == 'prod' }}
