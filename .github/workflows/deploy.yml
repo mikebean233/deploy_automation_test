@@ -75,9 +75,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ github.ref_name }}
         run: |
-          gh release create ${{ chosen-env.tag }} \
+          gh release create ${{ env.chosen-tag }} \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ env.tag }}" \
+              --title="${GITHUB_REPOSITORY#*/} ${{ env.chosen-tag }}" \
               --generate-notes          
   deploy-prod:
     if: ${{ inputs.environment == 'prod' }}
