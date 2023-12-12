@@ -60,7 +60,7 @@ jobs:
         run: |
           echo deployment id: ${{ steps.deployment-qa.outputs.deployment_id }}
       - name: run tests
-        uses: ./.github/workflows/tests.yml
+        uses: ${{ github.action_path }}/tests
         with:
           environment: qa
           tag: ${{ inputs.tag }}
