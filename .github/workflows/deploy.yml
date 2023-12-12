@@ -59,7 +59,7 @@ jobs:
       - name: print deployment id
         run: |
           echo deployment id: ${{ steps.deployment-qa.outputs.deployment_id }}
-      - name: run tests:
+      - name: run tests
         uses: ./.github/actions/tests.yml
         with:
           environment: qa
