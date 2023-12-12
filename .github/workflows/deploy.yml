@@ -5,13 +5,9 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        type: choice
+        type: environment
         description: Environment
-        default: 'dev'
-        options:
-          - dev
-          - qa
-          - prod
+        required: true
       tag:
         type: string
         description: tag to deploy
