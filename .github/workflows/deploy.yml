@@ -59,6 +59,11 @@ jobs:
       - name: print deployment id
         run: |
           echo deployment id: ${{ steps.deployment-qa.outputs.deployment_id }}
+      - name: run tests:
+        uses: ./.github/actions/tests.yml
+        with:
+          environment: qa
+          tag: ${{ inputs.tag }}
       - uses: chrnorm/deployment-status@v2
         name: Update deployment status (success)
         if: success()
@@ -74,7 +79,8 @@ jobs:
           gh release create ${{ inputs.tag }} \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${{ inputs.tag }}" \
-              --generate-notes          
+              --generate-notes
+              
   deploy-prod:
     if: ${{ inputs.environment == 'prod' }}
     runs-on: ubuntu-latest
