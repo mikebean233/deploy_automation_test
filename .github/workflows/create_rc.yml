@@ -30,3 +30,8 @@ jobs:
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${{ inputs.tag }}" \
               --generate-notes    
+  deploy:
+    uses: ./.github/workflows/deploy.yml
+    with:
+      tag: ${{ env.NEW_TAG }}
+      environment: qa
