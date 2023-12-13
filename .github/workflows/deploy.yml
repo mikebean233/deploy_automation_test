@@ -71,11 +71,6 @@ jobs:
       - name: print deployment id
         run: |
           echo deployment id: ${{ steps.deployment-qa.outputs.deployment_id }}
-      - name: run tests
-        uses: ${{ github.action_path }}/tests
-        with:
-          environment: qa
-          tag: ${{ inputs.tag }}
       - uses: chrnorm/deployment-status@v2
         name: Update deployment status (success)
         if: success()
@@ -83,15 +78,6 @@ jobs:
           token: '${{ github.token }}'
           deployment-id: ${{ steps.deployment-qa.outputs.deployment_id }}
           state: 'success'
-      - name: Create release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-        run: |
-          gh release create ${{ inputs.tag }} \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${{ inputs.tag }}" \
-              --generate-notes
               
   deploy-prod:
     if: ${{ inputs.environment == 'prod' }}
