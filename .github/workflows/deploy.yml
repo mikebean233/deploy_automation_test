@@ -102,4 +102,11 @@ jobs:
         with:
           token: '${{ github.token }}'
           deployment-id: ${{ steps.deployment-prod.outputs.deployment_id }}
-          state: 'success'        
+          state: 'success' 
+      - name: Release Current Version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref_name }}
+        run: |
+          gh release edit ${{ inputs.tag }} \
+          --latest    
