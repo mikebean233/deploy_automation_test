@@ -14,4 +14,10 @@ jobs:
           fetch-tags: true
       - name: Cut new tag
         run: |
-          
+          echo "TODO: Create a new tag
+          echo "NEW_TAG=1.0.0" >> $GITHUB_ENV
+      - name: Deploy to QA:
+        uses: ./.github/workflows/deploy.yml
+        with:
+          tag: ${{ env.NEW_TAG }}
+          environment: qa
