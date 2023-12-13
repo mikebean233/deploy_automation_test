@@ -15,7 +15,9 @@ jobs:
       - name: Cut new tag
         run: |
           echo "TODO: Create a new tag"
-          echo "NEW_TAG=1.0.0" >> $GITHUB_ENV
+          git describe --abbrev=0 > temp.txt
+          NEW_TAG=awk -F. '/[0-9]+\./{$2++;print}' OFS=. temp.txt
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
