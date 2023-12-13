@@ -16,11 +16,6 @@ jobs:
         run: |
           echo "TODO: Create a new tag"
           echo "NEW_TAG=1.0.0" >> $GITHUB_ENV
-      - name: Deploy to QA
-        uses: ./.github/workflows/deploy.yml
-        with:
-          tag: ${{ env.NEW_TAG }}
-          environment: qa
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -29,9 +24,12 @@ jobs:
           gh release create ${{ inputs.tag }} \
               --repo="$GITHUB_REPOSITORY" \
               --title="${GITHUB_REPOSITORY#*/} ${{ inputs.tag }}" \
-              --generate-notes    
+              --generate-notes 
+    outputs:
+      newTag: ${{ env.NEW_TAG }}
   deploy:
+    needs: cut_release
     uses: ./.github/workflows/deploy.yml
     with:
-      tag: ${{ env.NEW_TAG }}
+      tag: ${{ needs.cut_release.outputs.newTag }}
       environment: qa
