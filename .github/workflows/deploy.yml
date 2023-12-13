@@ -1,6 +1,15 @@
 name: Deploy
 
 on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        description: Environment
+        required: true
+      tag:
+        type: string
+        description: tag to deploy
   push:
   workflow_dispatch:
     inputs:
