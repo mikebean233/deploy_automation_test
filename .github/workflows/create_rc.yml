@@ -1,57 +1,17 @@
-# This is a basic workflow that is manually triggered
-
 name: Create RC
-
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-  # Inputs the workflow accepts.
-    inputs:
-      rcName:
-        description: 'Description of the rc'
-        required: true
-        type: string
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
+  cut_release:
     runs-on: ubuntu-latest
-
     permissions: write-all
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Run build script
-        run: ./.github/workflows/hello.sh
-        shell: bash
-      - name: Tag
-        uses: actions/github-script@v5
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: 'refs/tags/${{ github.event.inputs.rcName }}',
-              sha: context.sha
-            })
-      - name: Get Latest Release
-        id: latest_version
-        uses: abatilo/release-info-action@v1.3.3
-        with:
-          owner: mikebean233
-          repo: deploy_automation_test
-      - name: Example of consumption of the output
-        env:
-          LATEST: ${{ steps.latest_version.outputs.latest_tag }}
-          LATEST_DATE: ${{ steps.latest_version.outputs.latest_tag_published_at }}
-          LATEST_COMMITISH: ${{ steps.latest_version.outputs.target_commitish }}
+          fetch-tags: true
+      - name: Cut new tag
         run: |
-          echo "Version $LATEST was released at $LATEST_DATE, commitish: $LATEST_COMMITISH"     
+          
