@@ -11,6 +11,9 @@ on:
         type: string
         description: tag to deploy
   push:
+    branches:
+      - 'main'
+      - 'releases/**'
   workflow_dispatch:
     inputs:
       environment:
